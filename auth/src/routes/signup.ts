@@ -1,4 +1,6 @@
-import express from 'express'
+import express, {Response, Request} from 'express'
+import { body, validationResult } from 'express-validator'
+
 const router = express.Router()
 
 router.post("/api/users/signup", (req, res) => {
