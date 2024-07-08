@@ -30,6 +30,10 @@ app.all("*", async () => {
 app.use(errorHandler)
 
 const start = async () => {
+    if(!process.env.JWT_KEY) {
+        throw new Error('No secret key defined')
+    }
+
     try {
         await mongoose.connect("mongodb://auth-mongo-srv:27017/auth")
         console.log("Connected to mongodb")
