@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from 'axios'
 import useRequest from "../../hooks/useRequest";
 
 const Signup = () => {
