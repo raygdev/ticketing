@@ -7,8 +7,12 @@ const start = async () => {
         throw new Error('No secret key defined')
     }
 
+    if(!process.env.MONGO_URI) {
+        throw new Error('No mongo URI defined')
+    }
+
     try {
-        await mongoose.connect("mongodb://auth-mongo-srv:27017/auth")
+        await mongoose.connect(process.env.MONGO_URI)
         console.log("Connected to mongodb")
     } catch(e) {
         console.error(e)
