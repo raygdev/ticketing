@@ -75,7 +75,7 @@ it('it updates the provided valid inputs', async () => {
     const price = 20
 
     const response = await request(app)
-      .put(`/api/tickets/`)
+      .post(`/api/tickets`)
       .set('Cookie', cookie)
       .send({
         title: 'Title 1',
@@ -83,7 +83,7 @@ it('it updates the provided valid inputs', async () => {
       })
 
     await request(app)
-      .put(`/api/tickets${response.body.id}`)
+      .put(`/api/tickets/${response.body.id}`)
       .set('Cookie', cookie)
       .send({
         title,
