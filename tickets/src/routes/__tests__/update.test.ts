@@ -70,5 +70,32 @@ it('returns a 400 if the user provides an invalid title and price', async () => 
       .expect(400)
 })
 it('it updates the provided valid inputs', async () => {
+    const cookie = signin()
+    const title = 'Some title'
+    const price = 20
 
+    const response = await request(app)
+      .put(`/api/tickets/`)
+      .set('Cookie', cookie)
+      .send({
+        title: 'Title 1',
+        price: 10
+      })
+
+    await request(app)
+      .put(`/api/tickets${response.body.id}`)
+      .set('Cookie', cookie)
+      .send({
+        title,
+        price
+      })
+      .expect(200)
+
+    const updateResponse = await request(app)
+      .get(`/api/tickets/${response.body.id}`)
+      .send()
+      .expect(200)
+    
+    expect(updateResponse.body.title).toEqual(title)
+    expect(updateResponse.body.price).toEqual(price.toString())
 })
