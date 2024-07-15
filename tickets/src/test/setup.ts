@@ -11,7 +11,7 @@ declare global {
 global.signin = () => {
     // Build a JWT payload. { id, email }
     const payload = {
-        id: '1lk24j124l',
+        id: new mongoose.Types.ObjectId(),
         email: 'test@test.com'
     }
 
