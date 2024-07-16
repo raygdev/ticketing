@@ -21,6 +21,12 @@ client.on('connect', () => {
     subscription.on('message', (msg: Message) => {
        const data = msg.getData()
 
+       // listen for a close event and exit the process
+       client.on('close', () => {
+            console.log('NATS connection closed')
+            process.exit()
+       })
+
        if(typeof data === 'string') {
         console.log(`Received event #${msg.getSequence()} with data: ${data}`)
        }
@@ -29,3 +35,7 @@ client.on('connect', () => {
        msg.ack()
     })
 })
+
+// listen for SIGINT or SIGTERM and close the client
+process.on('SIGINT', () => client.close())
+process.on('SIGTERM', () => client.close())
