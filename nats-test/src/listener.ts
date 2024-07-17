@@ -9,11 +9,16 @@ const client = nats.connect('ticketing', randomBytes(4).toString('hex'), {
 
 client.on('connect', () => {
     console.log('Listener connected to nats')
-    const options = client.subscriptionOptions()
+    const options = client
+      .subscriptionOptions()
     // option to manually acknowledge a successful message delivery
       .setManualAckMode(true)
+      .setDeliverAllAvailable()
+      // create a durable name for listener
+      .setDurableName('order-service')
     const subscription = client.subscribe(
         'ticket:created',
+        // create a queue group
         'orders-service-queue-group',
         options
     )
