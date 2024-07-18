@@ -37,8 +37,11 @@ abstract class Listener {
         return this.client
           .subscriptionOptions()
           .setDeliverAllAvailable()
+          // option to manually acknowledge a successful message delivery
           .setManualAckMode(true)
+          // set default ack wait time
           .setAckWait(this.ackWait)
+          // create a durable name for listener
           .setDurableName(this.queueGroupName)
 
     }
@@ -46,6 +49,7 @@ abstract class Listener {
     listen() {
         const subscription = this.client.subscribe(
             this.subject,
+            // create a queue group name
             this.queueGroupName,
             this.subscriptionOptions()
         )
