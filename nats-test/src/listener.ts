@@ -15,7 +15,7 @@ client.on('connect', () => {
         console.log('NATS connection closed')
         process.exit()
     })
-
+    new TicketCreatedListener(client).listen()
 })
 
 // listen for SIGINT or SIGTERM and close the client
