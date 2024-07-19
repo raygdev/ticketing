@@ -30,5 +30,5 @@ it('returns the ticket if the ticket is found', async () => {
       .expect(200)
     
     expect(res.body.title).toEqual(title)
-    expect(res.body.price).toEqual(price.toString())
+    expect(res.body.price).toEqual(price)
 })

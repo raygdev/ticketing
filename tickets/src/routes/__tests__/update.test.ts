@@ -97,5 +97,5 @@ it('it updates the provided valid inputs', async () => {
       .expect(200)
     
     expect(updateResponse.body.title).toEqual(title)
-    expect(updateResponse.body.price).toEqual(price.toString())
+    expect(updateResponse.body.price).toEqual(price)
 })
