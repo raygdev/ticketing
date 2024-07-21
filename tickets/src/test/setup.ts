@@ -8,6 +8,8 @@ declare global {
     var signin: () => string[]
 }
 
+jest.mock('../nats-wrapper')
+
 global.signin = () => {
     // Build a JWT payload. { id, email }
     const payload = {
