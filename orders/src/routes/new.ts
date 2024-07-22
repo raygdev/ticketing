@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import express, { Request, Response } from "express";
-import { requireAuth, validateRequest } from "@raygdevtickets/common";
+import { NotFoundError, requireAuth, validateRequest } from "@raygdevtickets/common";
 import { body } from "express-validator";
+import { Ticket } from "../models/ticket";
+import { Order } from "../models/order";
 
 const router = express.Router();
 
@@ -20,6 +22,20 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    // Find the ticket the user is trying to order in the database
+    const { ticketId } = req.body
+
+    // Make sure the ticket is not already reserved
+    const ticket = await Ticket.findById(ticketId)
+    if(!ticket) {
+      throw new NotFoundError()
+    }
+
+    // Caculate expiration date for this order
+
+    // Build the order and save it to the database
+
+    // Publish an event saying an order was created
     res.send({});
   }
 );
