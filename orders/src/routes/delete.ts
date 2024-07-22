@@ -22,6 +22,8 @@ async (req: Request, res: Response) => {
   order.status = OrderStatus.Canceled
   await order.save()
 
+  // publishing an event saying this was canceled
+
   res.status(204).send(order)
 })
 
