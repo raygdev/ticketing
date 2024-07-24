@@ -4,7 +4,8 @@ import {
     validateRequest,
     NotFoundError,
     requireAuth,
-    NotAuthorizedError
+    NotAuthorizedError,
+    BadRequestError
 } from '@raygdevtickets/common'
 import { Ticket } from '../models/ticket'
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher'
@@ -33,6 +34,10 @@ async (req: Request, res: Response) => {
 
   if(ticket.userId !== req.currentUser!.id) {
     throw new NotAuthorizedError()
+  }
+
+  if(ticket.orderId) {
+    throw new BadRequestError('Cannot edit a reserved ticket')
   }
 
   ticket.set({
