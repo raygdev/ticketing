@@ -5,6 +5,8 @@ import {
   validateRequest,
   BadRequestError,
   NotFoundError,
+  NotAuthorizedError,
+  OrderStatus
 } from "@raygdevtickets/common";
 import { Order } from "../models/order";
 
@@ -25,7 +27,23 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.send({ success: true });
+    const { token, orderId } = req.body
+
+    const order = await Order.findById(orderId)
+
+    if(!order) {
+        throw new NotFoundError()
+    }
+
+    if(order.userId !== req.currentUser!.id) {
+      throw new NotAuthorizedError()
+    }
+
+    if(order.status === OrderStatus.Canceled) {
+      throw new BadRequestError('Cannot pay for a canceled order')
+    }
+
+    res.send({ succes: true })
   }
 );
 
