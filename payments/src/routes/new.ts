@@ -50,7 +50,7 @@ router.post(
         source: token
     })
 
-    res.send({ succes: true })
+    res.status(201).send({ succes: true })
   }
 );
 
