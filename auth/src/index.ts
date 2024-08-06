@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 import { app } from './app'
 
 const start = async () => {
-    console.log('server starting up')
     if(!process.env.JWT_KEY) {
         throw new Error('No secret key defined')
     }
